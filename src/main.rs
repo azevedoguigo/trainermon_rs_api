@@ -8,7 +8,7 @@ const DB_NAME: &str = "trainermon";
 const COLL_NAME: &str = "trainers";
 
 #[post("/add_trainer")]
-async fn add_user(client: web::Data<Client>, form: web::Form<Trainer>) -> HttpResponse {
+async fn add_trainer(client: web::Data<Client>, form: web::Form<Trainer>) -> HttpResponse {
     let collection = client.database(DB_NAME).collection(COLL_NAME);
     let result = collection.insert_one(form.into_inner(), None).await;
     
@@ -28,7 +28,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(client.clone()))
-            .service(add_user)
+            .service(add_trainer)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

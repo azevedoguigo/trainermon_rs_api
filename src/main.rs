@@ -18,6 +18,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(client.clone()))
             .service(routes::add_trainer)
+            .service(routes::get_trainer)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

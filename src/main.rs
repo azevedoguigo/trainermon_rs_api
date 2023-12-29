@@ -1,11 +1,13 @@
 mod trainer;
 mod routes;
+pub mod pokemon;
 
 use actix_web::{HttpServer, App, web};
 use mongodb::Client;
 
 const DB_NAME: &str = "trainermon";
-const COLL_NAME: &str = "trainers";
+const TRAINER_COLL_NAME: &str = "trainers";
+const POKEMON_COLL_NAME: &str = "pokemons";
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -19,6 +21,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(client.clone()))
             .service(routes::add_trainer)
             .service(routes::get_trainer)
+            .service(routes::add_pokemon)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

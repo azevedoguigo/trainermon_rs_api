@@ -22,6 +22,7 @@ async fn main() -> std::io::Result<()> {
             .service(routes::add_trainer)
             .service(routes::get_trainer)
             .service(routes::add_pokemon)
+            .service(routes::get_pokemon)
     })
     .bind(("127.0.0.1", 8080))?
     .run()

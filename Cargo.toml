@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 mongodb = "2"
+rust-argon2 = "2.0.0"
 serde = "1.0.193"

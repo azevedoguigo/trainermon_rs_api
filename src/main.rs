@@ -1,6 +1,7 @@
 mod trainer;
 mod routes;
 pub mod pokemon;
+pub mod utils;
 
 use actix_web::{HttpServer, App, web};
 use mongodb::Client;

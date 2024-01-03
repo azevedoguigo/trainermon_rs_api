@@ -3,14 +3,18 @@ use mongodb::bson::doc;
 use mongodb::Client;
 use mongodb::Collection;
 use crate::pokemon::Pokemon;
+use crate::utils::hash_password;
 use crate::{TRAINER_COLL_NAME, POKEMON_COLL_NAME, DB_NAME};
 use crate::trainer::Trainer;
 
 // Trainers routes.
 #[post("/add_trainer")]
-async fn add_trainer(client: web::Data<Client>, form: web::Json<Trainer>) -> HttpResponse {
+async fn add_trainer(client: web::Data<Client>, mut data: web::Json<Trainer>) -> HttpResponse {
     let collection = client.database(DB_NAME).collection(TRAINER_COLL_NAME);
-    let result = collection.insert_one(form.into_inner(), None).await;
+
+    data.password = hash_password(data.password.to_string());
+
+    let result = collection.insert_one(data.into_inner(), None).await;
 
     match result {
         Ok(_) => HttpResponse::Ok().body("Trainer added!"),
